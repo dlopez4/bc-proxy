@@ -101,7 +101,7 @@ app.get("/api/total", async (req, res) => {
       const putJson = await putRes.json(); //Recibo la respuesta
       upserted = putJson.data; //Recibo los datos finales
     } else {
-      const postUrl = `https://api.bigcommerce.com/stores/${BC_STORE_HASH}/v3/orders/${orderId}/metafields`;
+      const postUrl = `https://api.bigcommerce.com/stores/${BC_STORE_HASH}/v3/orders/${orderId}/metafields/${existing.id}`;
       const postRes =await fetch(postUrl, {
         method: "POST",
         headers: {
@@ -131,3 +131,4 @@ app.get("/api/total", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Proxy en http://localhost:${PORT}`));
+
