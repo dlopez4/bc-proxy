@@ -48,7 +48,7 @@ app.get("/api/order-meta", async (req, res) => {
   }
 });
 
-app.get("/api/total", async (req, res) => {
+app.get("/api/total-meta", async (req, res) => {
   try {
     const orderId = Number(req.query.orderId); //Obtengo el Id de la orden
     if (!orderId) return res.status(400).json({ error: "Falta orderId"}); //Si no la tengo, manda error
@@ -129,5 +129,6 @@ app.get("/api/total", async (req, res) => {
     return res.status(500).json({error: "Error del servidor"});
   }
 });
+
 
 app.listen(PORT, () => console.log(`Proxy en http://localhost:${PORT}`));
