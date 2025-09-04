@@ -65,7 +65,7 @@ app.get("/api/total", async (req, res) => {
     const totalIncTax = Number(orderV2.total_inc_tax || 0); //Obtengo el campo de total_inc_tax
     const storeCredit = Number(orderV2.store_credit_amount || 0); //Obtengo el campo de store_credit
     const suma = Number((totalIncTax + storeCredit).toFixed(2)); //hago la suma y lo redondeo a solo 2 decimales
-    console.log("total:", { orderId, totalIncTax, storeCredit, suma, orderV2});
+    console.log("total:", { orderId, totalIncTax, storeCredit, suma});
 
     //Ahora para insertar o actualizar el metafield
     const v3ListUrl = `https://api.bigcommerce.com/stores/${BC_STORE_HASH}/v3/orders/${orderId}/metafields`;//url para la API de metafields de una orden
@@ -78,7 +78,8 @@ app.get("/api/total", async (req, res) => {
     if (!listRes.ok) return res.status(listRes.status).send(await listRes.text()); //Si no hay respuesta devuelve el estatus
     const listJson = await listRes.json(); //Recibo la respuesta
     const existing = (listJson.data || []).find(m => (m.namespace === "factura") && (m.key === "MONTO")); //Mapeo si ya hay un dato con namespace = factura y el key = monto para saber si actualizo o creo un nuevo campo, devolviendo un true o false
-
+    console.log("total: existing", {existing});
+    
     let upserted; 
     if (existing) {
       const putUrl = `https://api.bigcommerce.com/stores/${BC_STORE_HASH}/v3/orders/${orderId}/metafields/${existing.id}`;
@@ -134,6 +135,7 @@ app.get("/api/total", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Proxy en http://localhost:${PORT}`));
+
 
 
 
