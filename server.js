@@ -61,7 +61,8 @@ app.get("/api/total", async (req, res) => {
       }
     }); //Este bloque hace la llamada a la API
     if (!v2Res.ok) return res.status(v2Res.status).send(await v2Res.text()); //Si no hay respuesta, devuelve el estatus
-    const orderV2 = await v2Res.json(); //Recibo la respuesta
+    const json = await v2Res.json(); //Recibo la respuesta
+    let orderV2 = json.data || {};
     const totalIncTax = Number(orderV2.total_inc_tax || 0); //Obtengo el campo de total_inc_tax
     const storeCredit = Number(orderV2.store_credit || 0); //Obtengo el campo de store_credit
     const suma = Number((totalIncTax + storeCredit).toFixed(2)); //hago la suma y lo redondeo a solo 2 decimales
@@ -134,6 +135,7 @@ app.get("/api/total", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Proxy en http://localhost:${PORT}`));
+
 
 
 
