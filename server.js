@@ -120,7 +120,11 @@ app.get("/api/total", async (req, res) => {
       const postJson = await postRes.json(); //Recibo la respuesta
       upserted = (postJson.data && postJson.data[0]) || null; //Recibo los datos finales
     }
-
+  return res.json({
+      orderId,
+      monto: suma,
+      metafield: upserted
+    });
 
   } catch (e) {
     console.error("total:", e.message);
@@ -129,6 +133,7 @@ app.get("/api/total", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Proxy en http://localhost:${PORT}`));
+
 
 
 
