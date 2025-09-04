@@ -65,6 +65,7 @@ app.get("/api/total", async (req, res) => {
     const totalIncTax = Number(orderV2.total_inc_tax || 0); //Obtengo el campo de total_inc_tax
     const storeCredit = Number(orderV2.store_credit || 0); //Obtengo el campo de store_credit
     const suma = Number((totalIncTax + storeCredit).toFixed(2)); //hago la suma y lo redondeo a solo 2 decimales
+    console.log("total:", { orderId, totalIncTax, storeCredit, suma});
 
     //Ahora para insertar o actualizar el metafield
     const v3ListUrl = `https://api.bigcommerce.com/stores/${BC_STORE_HASH}/v3/orders/${orderId}/metafields`;//url para la API de metafields de una orden
@@ -133,6 +134,7 @@ app.get("/api/total", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Proxy en http://localhost:${PORT}`));
+
 
 
 
