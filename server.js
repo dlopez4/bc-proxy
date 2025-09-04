@@ -90,14 +90,14 @@ app.get("/api/total", async (req, res) => {
           "Accept": "application/json",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          data: {
+        body: JSON.stringify(
+          {
             namespace: "factura",
             key: "MONTO",
             value: String(suma),
             permission_set: "read_and_sf_access"
           }
-        })
+        )
       }); //Este bloque realiza una actualización de monto de acuerdo a la suma realizada anteriormente
       if (!putRes.ok) return res.status(putRes.status).send(await putRes.text()); //Si no hay respuesta, devuelve el estatus
       const putJson = await putRes.json(); //Recibo la respuesta
@@ -135,6 +135,7 @@ app.get("/api/total", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Proxy en http://localhost:${PORT}`));
+
 
 
 
